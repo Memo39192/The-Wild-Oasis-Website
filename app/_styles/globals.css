@@ -28,20 +28,26 @@
   --color-redish-500: #eef56f;
 }
 
+/* @layer base {
+  html {
+    font-size: 80%;
+  }
+} */
+
 @layer components {
   .spinner {
     margin: 3.2rem auto 1.6rem;
-    width: 60px;
+    width: 4rem;
     aspect-ratio: 1;
     border-radius: 50%;
-    border: 8px solid theme('colors.primary.900');
+    border: 0.5rem solid theme('colors.primary.900');
     border-right-color: theme('colors.primary.200');
     animation: rotate 1s infinite linear;
   }
 
   .spinner-mini {
     margin: 0;
-    width: 20px;
+    width: 1.25rem;
     aspect-ratio: 1;
     border-radius: 50%;
     border: 2px solid theme('colors.primary.200');
@@ -56,10 +62,38 @@
   }
 }
 
-/* For data picker */
-.rdp {
-  --rdp-cell-size: 32px !important;
+/* For day picker */
+.rdp-root {
+  --rdp-day_button-height: 2.625rem !important;
+  --rdp-day_button-width: 2.625rem !important;
+  --rdp-day-height: 2.75rem !important;
+  --rdp-day-width: 2.75rem !important;
+  --rdp-nav_button-height: 2.25rem !important;
+  --rdp-nav_button-width: 2.25rem !important;
+
   --rdp-accent-color: theme('colors.accent.500') !important;
   --rdp-background-color: theme('colors.accent.600') !important;
+  --rdp-accent-background-color: theme('colors.accent.600') !important;
+
   margin: 0 !important;
+  padding: 0.5rem !important;
+}
+
+.rdp-months {
+  flex-wrap: nowrap !important;
+  gap: 1.5rem !important;
+}
+
+.rdp-month_caption {
+  margin-left: 1rem !important;
+  font-size: 1.125rem !important;
+}
+
+.rdp-chevron {
+  width: 1.125rem !important ;
+  height: 1.125rem !important;
+}
+
+.rdp-selected {
+  font-size: 1.125rem !important;
 }
