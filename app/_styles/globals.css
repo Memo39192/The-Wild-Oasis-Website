@@ -28,11 +28,11 @@
   --color-redish-500: #eef56f;
 }
 
-/* @layer base {
+@layer base {
   html {
     font-size: 80%;
   }
-} */
+}
 
 @layer components {
   .spinner {
