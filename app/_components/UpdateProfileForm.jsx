@@ -1,15 +1,28 @@
 'use client';
 
-import { useFormStatus } from 'react-dom';
+import { useState } from 'react';
 import { updateGuest } from '../_lib/actions';
 import SubmitButton from './SubmitButton';
 
 function UpdateProfileForm({ children, guest }) {
-  const { fullName, email, nationality, nationalID, countryFlag } = guest;
+  const { fullName, email, nationalID, countryFlag } = guest;
+  const [error, setError] = useState(null);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const result = await updateGuest(formData);
+
+    if (result?.error) {
+      setError(result.error);
+    } else {
+      setError(null);
+    }
+  }
 
   return (
     <form
-      action={updateGuest}
+      onSubmit={handleSubmit}
       className='bg-primary-900 flex flex-col gap-6 px-12 py-8 text-lg'
     >
       <div className='space-y-2'>
@@ -45,7 +58,6 @@ function UpdateProfileForm({ children, guest }) {
             className='h-5 rounded-sm'
           />
         </div>
-
         {children}
       </div>
 
@@ -57,8 +69,10 @@ function UpdateProfileForm({ children, guest }) {
           className='bg-primary-200 text-primary-800 w-full rounded-sm px-5 py-3 shadow-sm'
         />
       </div>
-
-      <SubmitButton pendingLabel='Updating...'>Update profile</SubmitButton>
+      <div className='flex items-center'>
+        {error && <p className='font-semibold text-red-400'>{error}</p>}
+        <SubmitButton pendingLabel='Updating...'>Update profile</SubmitButton>
+      </div>
     </form>
   );
 }

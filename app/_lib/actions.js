@@ -16,13 +16,15 @@ export async function signOutAction() {
 
 export async function updateGuest(formData) {
   const session = await auth();
-  if (!session) throw new Error('You must be logged in');
+  if (!session) return { error: 'You must be logged in' };
 
   const nationalID = formData.get('nationalID');
-  const [nationality, countryFlag] = formData.get('nationality').split('%');
+  const nationalityValue = formData.get('nationality') || '';
+  const [nationality, countryFlag] = nationalityValue.split('%');
 
-  if (!/^[A-Za-z0-9]{6,16}$/.test(String(nationalID)))
-    throw new Error('Please provide a valid national ID');
+  if (nationalID && !/^[A-Za-z0-9]{6,16}$/.test(String(nationalID))) {
+    return { error: 'Please provide a valid national ID' };
+  }
 
   const updateData = { nationality, countryFlag, nationalID };
 
@@ -31,7 +33,10 @@ export async function updateGuest(formData) {
     .update(updateData)
     .eq('id', session.user.guestId);
 
-  if (error) throw new Error('Guest could not be updated');
+  if (error) {
+    console.error('Supabase update error:', error);
+    return { error: 'Guest could not be updated' };
+  }
 
   revalidatePath('/account/profile');
 }
