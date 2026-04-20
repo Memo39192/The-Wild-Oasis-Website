@@ -1,4 +1,4 @@
-# 🌴 The Wild Oasis Website
+#🌴 The Wild Oasis Website
 
 A modern hotel management web app built with Next.js for managing bookings, cabins, users, and hotel settings through a clean dashboard experience.
 
